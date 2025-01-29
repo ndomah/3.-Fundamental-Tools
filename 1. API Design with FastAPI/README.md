@@ -115,14 +115,14 @@ sudo apt update && upgrade
 
 sudo apt install python3 python3-pip ipython3
 
-pip install fastapi
+pip install fastapi[standard]
 
 pip install uvicorn[standard]
 ```
 
 ### Test FastAPI
 From the [FastAPI Tutorial](https://fastapi.tiangolo.com/tutorial/first-steps/):
-- In [`main.py`]():
+- In `main.py`:
   ```python
   from fastapi import FastAPI
 
@@ -137,9 +137,280 @@ From the [FastAPI Tutorial](https://fastapi.tiangolo.com/tutorial/first-steps/):
   ```bash
   fastapi dev main.py
   ```
+- Open browser at [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
+- JSON response will be:
+  ```json
+  {"message": "Hello World"}
+  ```
+- Interactive API docs at [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+- Alternative API docs at [http://127.0.0.1:8000/redoc](http://127.0.0.1:8000/redoc)
+
+### The Dataset We Use
+- We will use [UK E-Commerce Data](https://archive.ics.uci.edu/dataset/352/online+retail) from UCI's Machine Learning Repository (alternative [Kaggle link](https://www.kaggle.com/datasets/carrie1/ecommerce-data))
+
+![fig3 - dataset]()
+
+### API Design
+- `Customer`
+  - Create new customer
+  - Get customer by ID
+  - Create invoice for customer
+  - Get all invoices for customer
+- `Invoice`
+  - Get specific invoice details (plus stock codes)
+  - Invoice add stock code
+- `StockCode`
+  - Get specific stock code details
+ 
+## Hands-On
+- Open [`main.py`]() in VS Code, and run `fastapi dev main.py` in the terminal:
+```python
+# You need this to use FastAPI, work with statuses and be able to end HTTPExceptions
+from fastapi import FastAPI, status, HTTPException
+
+# Both used for BaseModel
+from pydantic import BaseModel
+from typing import Optional
+
+# You need this to be able to turn classes into JSONs and return
+from fastapi.encoders import jsonable_encoder
+from fastapi.responses import JSONResponse
+
+# import json
+# from os import times
+
+
+class Customer(BaseModel):
+    customer_id: str
+    country: str
+    # city: Optional[str] = None
+
+
+class URLLink(BaseModel):
+    #url: str
+    url: Optional[str] = None
+    
+
+class Invoice(BaseModel):
+    invoice_no: int
+    invoice_date: str
+    customer: Optional[URLLink] = None
+
+fakeInvoiceTable = dict()
+
+# this is important for general execution and the docker later
+app = FastAPI()
+
+# Base URL
+@app.get("/")
+async def root():
+    return {"message": "Hello World"}
+
+# Add a new Customer
+@app.post("/customer")
+async def create_customer(item: Customer): #body awaits a json with customer information
+# This is how to work with and return a item
+#   country = item.country
+#   return {item.country}
+
+    # You would add here the code for creating a Customer in the database
+
+    # Encode the created customer item if successful into a JSON and return it to the client with 201
+    json_compatible_item_data = jsonable_encoder(item)
+    return JSONResponse(content=json_compatible_item_data, status_code=201)
+
+
+# Get a customer by customer id
+@app.get("/customer/{customer_id}") # Customer ID will be a path parameter
+async def read_customer(customer_id: str):
+    
+    # only succeed if the item is 12345
+    if customer_id == "12345" :
+        
+        # Create a fake customer ( usually you would get this from a database)
+        item = Customer(customer_id = "12345", country= "Germany")  
+        
+        # Encode the customer into JSON and send it back
+        json_compatible_item_data = jsonable_encoder(item)
+        return JSONResponse(content=json_compatible_item_data)
+    else:
+        # Raise a 404 exception
+        raise HTTPException(status_code=404, detail="Item not found")
+
+
+# Create a new invoice for a customer
+@app.post("/customer/{customer_id}/invoice")
+async def create_invoice(customer_id: str, invoice: Invoice):
+    
+    # Add the customer link to the invoice
+    invoice.customer.url = "/customer/" + customer_id
+    
+    # Turn the invoice instance into a JSON string and store it
+    jsonInvoice = jsonable_encoder(invoice)
+    fakeInvoiceTable[invoice.invoice_no] = jsonInvoice
+
+    # Read it from the store and return the stored item
+    ex_invoice = fakeInvoiceTable[invoice.invoice_no]
+    
+    return JSONResponse(content=ex_invoice) 
 
 
 
+# Return all invoices for a customer
+@app.get("/customer/{customer_id}/invoice")
+async def get_invoices(customer_id: str):
+    
+    # Create Links to the actual invoice (get from DB)
+    ex_json = { "id_123456" : "/invoice/123456",
+                "id_789101" : "/invoice/789101" 
+    }
+    return JSONResponse(content=ex_json) 
+
+
+
+# Return a specific invoice
+@app.get("/invoice/{invnoice_no}")
+async def read_invoice(invnoice_no: int):
+    # Option to manually create an invoice
+        #ex_inv = Invoice(invoice_no = invnoice_no, invoice_date= "2021-01-05", customer= URLLink(url = "/customer/12345"))
+        #json_compatible_item_data = jsonable_encoder(ex_inv)
+    
+    # Read invoice from the dictionary
+    ex_invoice = fakeInvoiceTable[invnoice_no]
+
+    # Return the JSON that we stored
+    return JSONResponse(content=ex_invoice)
+
+
+#get a specific stock code on the invoice
+@app.get("/invoice/{invnoice_no}/{stockcode}/")
+async def read_item(invnoice_no: int,stockcode: str):
+    return {"message": "Hello World"}
+
+# Add a stockcode to the inovice
+@app.post("/invoice/{invnoice_no}/{stockcode}/")
+async def add_item(invnoice_no: int ,stockcode:str):
+    return {"message": "Hello World"}
+```
+- Open server at [http://127.0.0.1:8000/](http://127.0.0.1:8000/) and documentation at [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+
+**API Endpoints**
+- `POST /customer`
+  - Creates a new customer 
+  - Request body:
+    ```json
+    {
+      "customer_id": "12345",
+      "country": "Germany"
+    }
+    ```
+  - Response (201 Created):
+    ```json
+    {
+      "customer_id": "12345",
+      "country": "Germany"
+    }
+    ```
+
+![fig4 - post customer]()
+
+
+- `GET /customer/{customer_id}`: Read customer
+  - Retrieves customer details based on `customer_id`
+  - Path parameter: `{customer_id}` (e.g., `12345`)
+  - Example request: `GET /customer/12345`
+  - Response:
+    ```json
+    {
+      "customer_id": "12345",
+      "country": "Germany"
+    }
+    ```
+  - If the customer does not exist:
+    ```json
+    {
+    "detail": "Item not found"
+    }
+    ```
+
+![fig5 - get customer]()
+
+
+- `POST /customer/{customer_id}/invoice`
+  - Creates a new invoice for a given customer
+  - Path parameter: `{customer_id}`
+  - Request body:
+    ```json
+    {
+      "invoice_no": 123456,
+      "invoice_date": "2021-01-05"
+    }
+    ```
+  - Response:
+    ```json
+    {
+      "invoice_no": 123456,
+      "invoice_date": "2021-01-05",
+      "customer": {
+        "url": "/customer/12345"
+      }
+    }
+    ```
+
+![fig6 - post invoice]()
+
+
+- `GET /invoice/{invoice_no}`
+  -  Retrieves a specific invoice by its number
+  -  Path parameter: `{invoice_no}`
+  -  Example request: `GET /invoice/123456`
+  -  Response (if invoice exists):
+     ```json
+     {
+       "invoice_no": 123456,
+       "invoice_date": "2021-01-05",
+       "customer": {
+        "url": "/customer/12345"
+      }
+     }
+     ```
+
+![fig7 - get invoice]()
+
+
+- `GET /customer/{customer_id}/invoice`
+  - Returns a list of invoices for a given customer
+  - Path parameter: `{customer_id}`
+  - Example request: `GET /customer/12345/invoice`
+  - Response:
+    ```json
+    {
+      "id_123456": "/invoice/123456",
+      "id_789101": "/invoice/789101"
+    }
+    ```  
+
+![fig 8 - get customer invoice]()
+
+## Deploying and Testing FastAPI with Docker and Postman
+### Setup Docker and Deploy on WSL2
+- On VS Code, build image from [dockerfile.yaml]():
+  ```yaml
+  FROM tiangolo/uvicorn-gunicorn-fastapi:python3.7
+
+  COPY ./app /app
+  ```
+- Name image as `apiswithfastapi:latest`
+- In the docker extension of the VS Code sidebar navigate to:
+  - IMAGES -> apiswithfastapi -> latest (run this)
+- This will show apiswithfastapi:latest as running under CONTAINERS
+- You will see the interactive docs again at [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+
+### Testing the APIs with Postman
+- Download [Postman](https://www.postman.com/downloads/) and import [`FASTApiTest.postman_collection.json`]()
+- Test by sending localhost/customer/12345 under `GET Customer`:
+
+![fig9 - postman]()
 
 
 
