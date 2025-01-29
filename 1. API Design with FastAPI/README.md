@@ -394,7 +394,7 @@ async def add_item(invnoice_no: int ,stockcode:str):
 
 ## Deploying and Testing FastAPI with Docker and Postman
 ### Setup Docker and Deploy on WSL2
-- On VS Code, build image from [dockerfile.yaml]():
+- On VS Code, build image from [Dockerfile.yaml]():
   ```yaml
   FROM tiangolo/uvicorn-gunicorn-fastapi:python3.7
 
