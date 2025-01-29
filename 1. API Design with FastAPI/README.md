@@ -411,6 +411,3 @@ async def add_item(invnoice_no: int ,stockcode:str):
 - Test by sending localhost/customer/12345 under `GET Customer`:
 
 ![fig9 - postman]()
-
-
-
