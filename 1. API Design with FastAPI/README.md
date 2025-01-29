@@ -408,6 +408,6 @@ async def add_item(invnoice_no: int ,stockcode:str):
 
 ### Testing the APIs with Postman
 - Download [Postman](https://www.postman.com/downloads/) and import [`FASTApiTest.postman_collection.json`](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/1.%20API%20Design%20with%20FastAPI/postman/FASTApiTest.postman_collection.json)
-- Test by sending localhost/customer/12345 under `GET Customer`:
+- Test by sending localhost:8000/customer/12345 under `GET Customer`:
 
 ![fig9 - postman](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/1.%20API%20Design%20with%20FastAPI/img/fig9%20-%20postman.png)
