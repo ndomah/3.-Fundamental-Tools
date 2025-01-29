@@ -146,16 +146,67 @@ XCom (**Cross-Communication**) is a mechanism in **Apache Airflow** that enables
 
 *NOTE*: Airflow is not a data processing framework. It is designed for **workflow orchestration**, not for directly processing large-scale data.
 
-## Hands-On
+## Hands-On Setup
+### Setup
+
+![fig7 - setup]()
+
+This **Airflow DAG** automates weather data collection and storage, making it useful for **data analytics, forecasting, and monitoring weather trends**.
+
+**Execution Flow**
+1. The **Extract** task makes an API request to the **Weather API** to fetch weather data.
+2. The **Transform** task processes and formats the extracted data (e.g., removing null values, structuring JSON).
+3. The **Load** task inserts the transformed data into **PostgreSQL** for storage and further analysis.
+
+### Docker Setup
+
+![fig8 - docker]()
+
+**How the Dockerized Airflow Setup Works**
+1. The **Webserver UI** allows users to manage DAGs.
+2. The **Scheduler** scans the **DAG Directory (`/dags`)** and determines which tasks need execution.
+3. The **Executor** delegates tasks to **Celery Workers** for parallel processing.
+4. **Redis** acts as a **message broker**, queuing tasks for workers.
+5. **Celery Workers** pull tasks from Redis and execute them.
+6. The **PostgreSQL Metadata Database** stores the task execution results.
+7. The **Adminer UI** provides a simple way to interact with the PostgreSQL database.
+
+**Why Use Docker for Airflow?**
+- **Easier Deployment**: All components run in separate containers.
+- **Scalability**: Celery Workers can be scaled up/down dynamically.
+- **Persistence**: The PostgreSQL database ensures task history and logs are retained.
+
+### Docker Compose and Starting Containers
+
+
+### Checking Services
+
+
+### Setup WeatherAPI
+
+
+### Setup PostgreSQL
 
 
 
+## Learn Creating DAGs
+### Airflow Web Interface
 
 
+### Creating DAG with Airflow 2.0
 
 
+### Running our DAG
 
 
+### Creating DAG with TaskflowAPI
 
 
+### Getting Data from the API with SimpleHTTTPOperator
+
+
+### Writing into PostgreSQL
+
+
+### Parallel Processing
 
