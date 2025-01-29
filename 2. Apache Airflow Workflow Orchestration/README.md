@@ -284,6 +284,8 @@ with DAG('ETLWeatherPrintAirflow2', description='Airflow2.0 DAG', start_date=dt.
 ### Running our DAG
 - On the Airflow UI, click 'Trigger DAG' on ETLWeatherPrintAirflow2
 
+
+
 ### Creating DAG with TaskflowAPI
 
 
