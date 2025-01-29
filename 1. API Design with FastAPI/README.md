@@ -12,7 +12,7 @@ An **API** is a set of rules that allows different software applications to comm
 
 ### Hosting an API
 
-![fig1 - hosting an api]()
+![fig1 - hosting an api](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/1.%20API%20Design%20with%20FastAPI/img/fig1%20-%20hosting%20api.png)
 
 This image illustrates an **event-driven architecture** where a client interacts with an API, which then routes data to different backend components like a **database** and a **message queue.**
 
@@ -37,7 +37,7 @@ This image illustrates an **event-driven architecture** where a client interacts
 
 ### Using an API
 
-![fig2 - using an api]()
+![fig2 - using an api](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/1.%20API%20Design%20with%20FastAPI/img/fig2%20-%20using%20api.png)
 
 This diagram represents an **API-based batch processing pipeline** where a **Python job** queries an **API**, processes the data, and routes it to different destinations.
 
@@ -148,7 +148,7 @@ From the [FastAPI Tutorial](https://fastapi.tiangolo.com/tutorial/first-steps/):
 ### The Dataset We Use
 - We will use [UK E-Commerce Data](https://archive.ics.uci.edu/dataset/352/online+retail) from UCI's Machine Learning Repository (alternative [Kaggle link](https://www.kaggle.com/datasets/carrie1/ecommerce-data))
 
-![fig3 - dataset]()
+![fig3 - dataset](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/1.%20API%20Design%20with%20FastAPI/img/fig3%20-%20dataset.png)
 
 ### API Design
 - `Customer`
@@ -163,7 +163,7 @@ From the [FastAPI Tutorial](https://fastapi.tiangolo.com/tutorial/first-steps/):
   - Get specific stock code details
  
 ## Hands-On
-- Open [`main.py`]() in VS Code, and run `fastapi dev main.py` in the terminal:
+- Open [`main.py`](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/1.%20API%20Design%20with%20FastAPI/app/main.py) in VS Code, and run `fastapi dev main.py` in the terminal:
 ```python
 # You need this to use FastAPI, work with statuses and be able to end HTTPExceptions
 from fastapi import FastAPI, status, HTTPException
@@ -312,7 +312,7 @@ async def add_item(invnoice_no: int ,stockcode:str):
     }
     ```
 
-![fig4 - post customer]()
+![fig4 - post customer](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/1.%20API%20Design%20with%20FastAPI/img/fig4%20-%20post%20custtomer.png)
 
 
 - `GET /customer/{customer_id}`: Read customer
@@ -333,7 +333,7 @@ async def add_item(invnoice_no: int ,stockcode:str):
     }
     ```
 
-![fig5 - get customer]()
+![fig5 - get customer](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/1.%20API%20Design%20with%20FastAPI/img/fig5%20-%20get%20customer.png)
 
 
 - `POST /customer/{customer_id}/invoice`
@@ -357,7 +357,7 @@ async def add_item(invnoice_no: int ,stockcode:str):
     }
     ```
 
-![fig6 - post invoice]()
+![fig6 - post invoice](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/1.%20API%20Design%20with%20FastAPI/img/fig6%20-%20post%20invoice.png)
 
 
 - `GET /invoice/{invoice_no}`
@@ -375,7 +375,7 @@ async def add_item(invnoice_no: int ,stockcode:str):
      }
      ```
 
-![fig7 - get invoice]()
+![fig7 - get invoice](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/1.%20API%20Design%20with%20FastAPI/img/fig7%20-%20get%20invoice.png)
 
 
 - `GET /customer/{customer_id}/invoice`
@@ -390,11 +390,11 @@ async def add_item(invnoice_no: int ,stockcode:str):
     }
     ```  
 
-![fig 8 - get customer invoice]()
+![fig 8 - get customer invoice](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/1.%20API%20Design%20with%20FastAPI/img/fig8%20-%20get%20customer%20invoice.png)
 
 ## Deploying and Testing FastAPI with Docker and Postman
 ### Setup Docker and Deploy on WSL2
-- On VS Code, build image from [Dockerfile.yaml]():
+- On VS Code, build image from [Dockerfile.yaml](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/1.%20API%20Design%20with%20FastAPI/Dockerfile):
   ```yaml
   FROM tiangolo/uvicorn-gunicorn-fastapi:python3.7
 
@@ -407,7 +407,7 @@ async def add_item(invnoice_no: int ,stockcode:str):
 - You will see the interactive docs again at [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
 
 ### Testing the APIs with Postman
-- Download [Postman](https://www.postman.com/downloads/) and import [`FASTApiTest.postman_collection.json`]()
+- Download [Postman](https://www.postman.com/downloads/) and import [`FASTApiTest.postman_collection.json`](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/1.%20API%20Design%20with%20FastAPI/postman/FASTApiTest.postman_collection.json)
 - Test by sending localhost/customer/12345 under `GET Customer`:
 
-![fig9 - postman]()
+![fig9 - postman](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/1.%20API%20Design%20with%20FastAPI/img/fig9%20-%20postman.png)
