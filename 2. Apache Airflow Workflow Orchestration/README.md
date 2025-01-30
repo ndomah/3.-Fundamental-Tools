@@ -238,29 +238,29 @@ Password: airflow
 
 ## DAGs in This Project
 ### 1. **00_ETLWeatherPrintAirflow2.py**
-- [00_ETLWeatherPrintAirflow2.py](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/2.%20Apache%20Airflow%20Workflow%20Orchestration/dags/00_ETLWeatherPrintAirflow2.py)
+- [`00_ETLWeatherPrintAirflow2.py`](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/2.%20Apache%20Airflow%20Workflow%20Orchestration/dags/00_ETLWeatherPrintAirflow2.py)
 - Extracts weather data from an API
 - Transforms the data using a custom transformer
 - Loads the data by logging it in Airflow
 
 ### 2. **01-ETLWeatherPrint.py**
-- [01-ETLWeatherPrint.py](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/2.%20Apache%20Airflow%20Workflow%20Orchestration/dags/01-ETLWeatherPrint.py)
+- [`01-ETLWeatherPrint.py`](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/2.%20Apache%20Airflow%20Workflow%20Orchestration/dags/01-ETLWeatherPrint.py)
 - Implements Airflow's **TaskFlow API** for better readability
 - Uses Python decorators for defining tasks
 - Logs the extracted and transformed data
 
 ### 3. **02-ETLWeatherPostgres.py**
-- [02-ETLWeatherPostgres.py](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/2.%20Apache%20Airflow%20Workflow%20Orchestration/dags/02-ETLWeatherPostgres.py)
+- [`02-ETLWeatherPostgres.py`](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/2.%20Apache%20Airflow%20Workflow%20Orchestration/dags/02-ETLWeatherPostgres.py)
 - Extracts weather data from an API
 - Transforms it using `transform_weatherAPI`
 - Loads the data into a **PostgreSQL** database
 
 ### 4. **03-ETLWeatherPostgresAndPrint.py**
-- [03-ETLWeatherPostgresAndPrint.py](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/2.%20Apache%20Airflow%20Workflow%20Orchestration/dags/03-ETLWeatherPostgresAndPrint.py)
+- [`03-ETLWeatherPostgresAndPrint.py`](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/2.%20Apache%20Airflow%20Workflow%20Orchestration/dags/03-ETLWeatherPostgresAndPrint.py)
 - Similar to the previous DAG but also **prints the transformed data** for verification
 
 ### 5. **SimpleHTTPOperator.py**
-- [SimpleHTTPOperator.py](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/2.%20Apache%20Airflow%20Workflow%20Orchestration/dags/SimpleHTTPOperator.py)
+- [`SimpleHTTPOperator.py`](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/2.%20Apache%20Airflow%20Workflow%20Orchestration/dags/SimpleHTTPOperator.py)
 - Uses `SimpleHttpOperator` to fetch API data directly
 - Simplifies API calls within Airflow
 
