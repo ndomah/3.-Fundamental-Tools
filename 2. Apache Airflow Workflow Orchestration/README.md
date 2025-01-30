@@ -2,7 +2,7 @@
 ## Introduction
 ### Airflow Usage
 
-![fig1 - airflow usage]()
+![fig1 - airflow usage](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/2.%20Apache%20Airflow%20Workflow%20Orchestration/img/fig1%20-%20airflow%20usage.png)
 
 This image represents an **Apache Airflow DAG (Directed Acyclic Graph)**, a key concept in orchestrating data workflows.
 
@@ -31,7 +31,7 @@ This image represents an **Apache Airflow DAG (Directed Acyclic Graph)**, a key 
 ## Airflow Fundamental Concepts
 ### Fundamental Concepts
 
-![fig2 - fundamental concepts]()
+![fig2 - fundamental concepts](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/2.%20Apache%20Airflow%20Workflow%20Orchestration/img/fig2%20-%20fundamental%20concepts.png)
 
 **1. DAG (Directed Acyclic Graph)**
 A **DAG** is the **overall workflow definition** in Airflow. It consists of multiple tasks and defines their dependencies.
@@ -63,7 +63,7 @@ This modular approach allows **dynamic, scheduled, and automated workflows** in 
 
 ### Airflow Architecture
 
-![fig3 - architecture]()
+![fig3 - architecture](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/2.%20Apache%20Airflow%20Workflow%20Orchestration/img/fig3%20-%20architecture.png)
 
 
 | **Component**         | **Description** | **How It Works** |
@@ -80,7 +80,7 @@ This architecture ensures **scalability, reliability, and efficient workflow aut
 ### Example Pipelines
 #### SQL, Kubernets, Slack
 
-![fig4 - sql,kubernetes,slack]()
+![fig4 - sql,kubernetes,slack](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/2.%20Apache%20Airflow%20Workflow%20Orchestration/img/fig4%20-%20sql%2Ckubernetes%2Cslack.png)
 
 | **Component**        | **Role in the Pipeline** |
 |---------------------|------------------------|
@@ -97,7 +97,7 @@ This **event-driven workflow** automates tasks across multiple platforms, ensuri
 
 #### S3, GCP Dataproc, BigQuery
 
-![fig5 - s3,gcp dataproc,bigquery]()
+![fig5 - s3,gcp dataproc,bigquery](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/2.%20Apache%20Airflow%20Workflow%20Orchestration/img/fig5%20-%20s3%2C%20gcp%20dataproc%2C%20bigquery.png)
 
 | **Component**        | **Role in the Pipeline** |
 |---------------------|------------------------|
@@ -130,7 +130,7 @@ By leveraging these third-party operators, you can enhance your Airflow workflow
 
 ### Airflow XComs
 
-![fig6 - xcoms]()
+![fig6 - xcoms](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/2.%20Apache%20Airflow%20Workflow%20Orchestration/img/fig6%20-%20xcoms.png)
 
 XCom (**Cross-Communication**) is a mechanism in **Apache Airflow** that enables tasks to share information asynchronously. Tasks can **push (write)** and **pull (read)** data using XComs, which are stored in the **Metadata Database**.
 
@@ -149,7 +149,7 @@ XCom (**Cross-Communication**) is a mechanism in **Apache Airflow** that enables
 ## Hands-On Setup
 ### Setup
 
-![fig7 - setup]()
+![fig7 - setup](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/2.%20Apache%20Airflow%20Workflow%20Orchestration/img/fig7%20-%20setup.png)
 
 This **Airflow DAG** automates weather data collection and storage, making it useful for **data analytics, forecasting, and monitoring weather trends**.
 
@@ -160,7 +160,7 @@ This **Airflow DAG** automates weather data collection and storage, making it us
 
 ### Docker Setup
 
-![fig8 - docker]()
+![fig8 - docker](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/2.%20Apache%20Airflow%20Workflow%20Orchestration/img/fig8%20-%20docker%20setup.png)
 
 **How the Dockerized Airflow Setup Works**
 1. The **Webserver UI** allows users to manage DAGs.
@@ -182,12 +182,12 @@ This **Airflow DAG** automates weather data collection and storage, making it us
 ### Checking Services
 - Go to [localhost:8080](localhost:8080) (Airflow UI) on browser and login
 
-![fig9 - localhost]()
+![fig9 - localhost](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/2.%20Apache%20Airflow%20Workflow%20Orchestration/img/fig9%20-%20localhost.png)
 
 - We will use the ETL DAGs later on
 - Go to [localhost:9000](localhost:9000) (Portainer) on browser and login
 
-![fig10 - portainer]()
+![fig10 - portainer](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/2.%20Apache%20Airflow%20Workflow%20Orchestration/img/fig10%20-%20portainer.png)
 
 ### Setup WeatherAPI
 - Login to [WeatherApi](weatherapi.com) and copy API Key to put in scripts
@@ -197,7 +197,7 @@ This **Airflow DAG** automates weather data collection and storage, making it us
 - Choose PostgreSQL and rename server to postgres:5432
 - After logging in, create the WeatherData database and temperature table
 
-![fig11 - postgresql]()
+![fig11 - postgresql](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/2.%20Apache%20Airflow%20Workflow%20Orchestration/img/fig11%20-%20postgresql.png)
 
 # Airflow Weather ETL Pipeline
 ## Project Overview
@@ -238,42 +238,41 @@ Password: airflow
 
 ## DAGs in This Project
 ### 1. **00_ETLWeatherPrintAirflow2.py**
-- []()
+- [00_ETLWeatherPrintAirflow2.py](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/2.%20Apache%20Airflow%20Workflow%20Orchestration/dags/00_ETLWeatherPrintAirflow2.py)
 - Extracts weather data from an API
 - Transforms the data using a custom transformer
 - Loads the data by logging it in Airflow
 
 ### 2. **01-ETLWeatherPrint.py**
-- []()
+- [01-ETLWeatherPrint.py](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/2.%20Apache%20Airflow%20Workflow%20Orchestration/dags/01-ETLWeatherPrint.py)
 - Implements Airflow's **TaskFlow API** for better readability
 - Uses Python decorators for defining tasks
 - Logs the extracted and transformed data
 
 ### 3. **02-ETLWeatherPostgres.py**
-- []()
+- [02-ETLWeatherPostgres.py](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/2.%20Apache%20Airflow%20Workflow%20Orchestration/dags/02-ETLWeatherPostgres.py)
 - Extracts weather data from an API
 - Transforms it using `transform_weatherAPI`
 - Loads the data into a **PostgreSQL** database
 
 ### 4. **03-ETLWeatherPostgresAndPrint.py**
-- []()
+- [03-ETLWeatherPostgresAndPrint.py](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/2.%20Apache%20Airflow%20Workflow%20Orchestration/dags/03-ETLWeatherPostgresAndPrint.py)
 - Similar to the previous DAG but also **prints the transformed data** for verification
 
 ### 5. **SimpleHTTPOperator.py**
-- []()
+- [SimpleHTTPOperator.py](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/2.%20Apache%20Airflow%20Workflow%20Orchestration/dags/SimpleHTTPOperator.py)
 - Uses `SimpleHttpOperator` to fetch API data directly
 - Simplifies API calls within Airflow
 
 ## Transformer Module
-### `transformer.py`
-- []()
+- [`transformer.py`](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/2.%20Apache%20Airflow%20Workflow%20Orchestration/dags/transformer.py)
 - This script processes the API data and extracts key fields like location, temperature, wind speed, and timestamps.
 - Uses Pandas for JSON normalization.
 
 ## DAG Flowchart
 Below is a flowchart representation of the DAG workflow:
 
-![fig12 - airflow etl graph]()
+![fig12 - airflow etl graph](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/2.%20Apache%20Airflow%20Workflow%20Orchestration/img/fig12%20-%20airflow%20etl%20graph.PNG)
 
 ## Database Schema (PostgreSQL)
 The data is stored in a PostgreSQL table named **temperature** with the following schema:
@@ -289,13 +288,13 @@ CREATE TABLE temperature (
 ## Airflow Connection Configuration
 To connect Airflow to PostgreSQL, use the following configuration:
 
-![fig13 - postgres connection]()
+![fig13 - postgres connection](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/2.%20Apache%20Airflow%20Workflow%20Orchestration/img/fig13%20-%20postgres%20connection.PNG)
 
 ## Troubleshooting
 ### Permission Issues with Airflow Logs
 If you encounter permission errors related to volume mounting in Docker, check the logs and ensure the necessary directories exist and have the correct permissions.
 
-![fig14 - problem volumes]()
+![fig14 - problem volumes](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/2.%20Apache%20Airflow%20Workflow%20Orchestration/img/fig14%20-%20problem%20volumes.PNG)
 
 ## Running a DAG
 To trigger a DAG manually:
