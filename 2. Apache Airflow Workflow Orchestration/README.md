@@ -190,7 +190,7 @@ This **Airflow DAG** automates weather data collection and storage, making it us
 ![fig10 - portainer]()
 
 ### Setup WeatherAPI
-- Login to [WeatherApi](weatherapi.com) and copy API Key to put in script
+- Login to [WeatherApi](weatherapi.com) and copy API Key to put in scripts
 
 ### Setup PostgreSQL
 - Go to [localhost:8081](localhost:8081) on browser
@@ -199,101 +199,112 @@ This **Airflow DAG** automates weather data collection and storage, making it us
 
 ![fig11 - postgresql]()
 
-## Creating DAGs
-### Creating DAG with Airflow 2.0
-- Refer to [`00_ETLWeatherPrintAirflow2.py`]()
-```python
-# imports important for Airflow
-from airflow import DAG
-from airflow.operators.python import PythonOperator
+# Airflow Weather ETL Pipeline
+## Project Overview
+This project demonstrates an **ETL pipeline using Apache Airflow**, designed to extract weather data from an API, transform it, and load it into PostgreSQL for storage and analysis. The pipeline is orchestrated using Airflow running in Docker with a CeleryExecutor.
 
-# Import Modules for code
-import json
-import requests
-import datetime as dt
-import logging
-
-# import custom transformer for API data
-from transformer import transform_weatherAPI
-
-def my_extract(**kwargs):
-
-    # TODO: Change the API Key to your key!!
-
-    #Fetch the data from an API and print it
-    payload = {'Key': 'insert key here', 'q': 'Berlin', 'aqi': 'no'}
-    r = requests.get("http://api.weatherapi.com/v1/current.json", params=payload)
-
-    # Get the json
-    r_string = r.json()
-    
-    #dump the json result into a string
-    ex_string = json.dumps(r_string)  
-    
-    # push it into xcom variable api_result
-    task_instance = kwargs['ti']
-    task_instance.xcom_push(key='api_result', value= ex_string)
-    
-    # optional return value (also goes into xcom, if you only have one value it's enough)
-    return ex_string
-
-
-def my_transform(**kwargs):
-    
-    task_instance = kwargs['ti']
-    api_data = task_instance.xcom_pull(key='api_result', task_ids='extract')
-    
-    ex_json = transform_weatherAPI(api_data)
-    
-    task_instance.xcom_push(key='transformed_weather', value=ex_json)
-    
-
-def my_load(**kwargs):
-    # TODO: Read the transformed data and save it where it can be analyzed later
-    
-    task_instance = kwargs['ti']
-    weather_json = task_instance.xcom_pull(key='transformed_weather', task_ids='transform')
-    
-    logger = logging.getLogger("airflow.task")
-    logger.info(weather_json)
-
-
-with DAG('ETLWeatherPrintAirflow2', description='Airflow2.0 DAG', start_date=dt.datetime(2018, 11, 1),schedule_interval = "0 * * * *", catchup=False,tags=['LearnDataEngineering']) as dag:
-    ext = PythonOperator(
-        task_id='extract',
-        python_callable=my_extract,
-        provide_context=True,
-    )
-
-
-    trn = PythonOperator(
-        task_id='transform',
-        python_callable=my_transform,
-        provide_context=True,
-    )
-
-    lds = PythonOperator(
-        task_id='load',
-        python_callable=my_load,
-        provide_context=True,
-    )
-
-    ext >> trn >> lds
+## Folder Structure
+```
+Airflow/
+│── docker-compose.yml
+│── dags/
+│   ├── 00_ETLWeatherPrintAirflow2.py
+│   ├── 01-ETLWeatherPrint.py
+│   ├── 02-ETLWeatherPostgres.py
+│   ├── 03-ETLWeatherPostgresAndPrint.py
+│   ├── SimpleHTTPOperator.py
+│   ├── transformer.py
 ```
 
-### Running our DAG
-- On the Airflow UI, click 'Trigger DAG' on ETLWeatherPrintAirflow2
+## Setting Up the Environment
 
+### Start Airflow Using Docker-Compose
+Ensure the correct `.env` file (if needed), and then run:
+```sh
+docker-compose up -d
+```
+This will start the Airflow webserver, scheduler, and worker processes along with PostgreSQL and Redis.
 
+### Access Airflow Web UI
+Once all services are running, open Airflow's UI at:
+```
+http://localhost:8080
+```
+Login credentials (default):
+```
+Username: airflow
+Password: airflow
+```
 
-### Creating DAG with TaskflowAPI
+## DAGs in This Project
+### 1. **00_ETLWeatherPrintAirflow2.py**
+- []()
+- Extracts weather data from an API
+- Transforms the data using a custom transformer
+- Loads the data by logging it in Airflow
 
+### 2. **01-ETLWeatherPrint.py**
+- []()
+- Implements Airflow's **TaskFlow API** for better readability
+- Uses Python decorators for defining tasks
+- Logs the extracted and transformed data
 
-### Getting Data from the API with SimpleHTTTPOperator
+### 3. **02-ETLWeatherPostgres.py**
+- []()
+- Extracts weather data from an API
+- Transforms it using `transform_weatherAPI`
+- Loads the data into a **PostgreSQL** database
 
+### 4. **03-ETLWeatherPostgresAndPrint.py**
+- []()
+- Similar to the previous DAG but also **prints the transformed data** for verification
 
-### Writing into PostgreSQL
+### 5. **SimpleHTTPOperator.py**
+- []()
+- Uses `SimpleHttpOperator` to fetch API data directly
+- Simplifies API calls within Airflow
 
+## Transformer Module
+### `transformer.py`
+- []()
+- This script processes the API data and extracts key fields like location, temperature, wind speed, and timestamps.
+- Uses Pandas for JSON normalization.
 
-### Parallel Processing
+## DAG Flowchart
+Below is a flowchart representation of the DAG workflow:
 
+![fig12 - airflow etl graph]()
+
+## Database Schema (PostgreSQL)
+The data is stored in a PostgreSQL table named **temperature** with the following schema:
+```sql
+CREATE TABLE temperature (
+    location TEXT,
+    temp_c FLOAT,
+    wind_kph FLOAT,
+    time TIMESTAMP
+);
+```
+
+## Airflow Connection Configuration
+To connect Airflow to PostgreSQL, use the following configuration:
+
+![fig13 - postgres connection]()
+
+## Troubleshooting
+### Permission Issues with Airflow Logs
+If you encounter permission errors related to volume mounting in Docker, check the logs and ensure the necessary directories exist and have the correct permissions.
+
+![fig14 - problem volumes]()
+
+## Running a DAG
+To trigger a DAG manually:
+1. Open Airflow UI (`http://localhost:8080`)
+2. Find the DAG from the list
+3. Click the **Trigger DAG** button
+
+## Stopping Airflow
+To stop all services:
+```sh
+docker-compose down
+```
