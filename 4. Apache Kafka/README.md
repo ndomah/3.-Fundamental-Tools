@@ -1,5 +1,6 @@
 # Apache Kafka Fundamentals
 ## What is Kafka?
+
 Kafka is a **distributed message queue** that enables event/stream processing, buffering messages, and decoupling ingestion from processing/storage. It acts as a temporary store where messages have a TTL (Time-To-Live).
 
 ### Basic Kafka Components
@@ -12,13 +13,22 @@ Kafka is a **distributed message queue** that enables event/stream processing, b
 - **Consumers & Consumer Groups**: Read messages from topics.
 
 ## Kafka & Message Queue Basics
+
+![message queue basics](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/4.%20Apache%20Kafka/img/message%20queue%20basics.png)
+
 Kafka provides a **distributed, fault-tolerant message** queue, enabling event-driven architectures. Messages are serialized and stored in Kafka topics before being consumed.
 
 ## Apache Kafka Components
 ### Topics, Partitions, & Brokers
+
+![topics, partitions, brokers](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/4.%20Apache%20Kafka/img/topics%20partitions%20and%20brokers.png)
+
 Kafka topics consist of multiple **partitions** spread across **brokers** for scalability and parallel processing. ISR (In-Sync Replicas) ensure message durability.
 
 ### Brokers & Zookeeper
+
+![brokers and zookeeper](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/4.%20Apache%20Kafka/img/brokers%20and%20zookeeper.png)
+
 Kafka brokers handle message storage and retrieval, while **Zookeeper** manages:
 - Broker states & quotas
 - Topic configurations
@@ -31,7 +41,7 @@ Kafka brokers handle message storage and retrieval, while **Zookeeper** manages:
 ### Setting up Kafka with Docker
 We use **Bitnami Kafka** images to set up Kafka and Zookeeper:
 
-[`docker-compose.yml`]:
+[`docker-compose.yml`](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/4.%20Apache%20Kafka/scripts/docker-compose.yml):
 ```yml
 version: "3"
 services:
@@ -61,6 +71,7 @@ docker-compose up -d
 
 ## Kafka Commands
 ### Working with Topics
+[`commands.md`](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/4.%20Apache%20Kafka/scripts/commands.md):
 ```
 # Create a new topic
 ./kafka-topics.sh --create --topic mytesttopic --bootstrap-server localhost:9092
@@ -80,6 +91,7 @@ docker-compose up -d
 
 ## Python Producer & Consumer
 ### Python Producer
+[`producer.py`](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/4.%20Apache%20Kafka/scripts/producer.py):
 ```python
 from kafka import KafkaProducer
 
@@ -104,6 +116,7 @@ kafka_python_producer_async(producer, bytes(msg, 'utf-8'))
 print("done")
 ```
 ### Python Consumer
+[`consumer.py`](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/4.%20Apache%20Kafka/scripts/consumer.py):
 ```python
 from kafka import KafkaConsumer
 
@@ -118,8 +131,24 @@ print("done")
 ```
 
 ## Kafka in Data Platforms
+### Example: How Kafka fits in Data Platforms
+
+![ingestion pipeline](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/4.%20Apache%20Kafka/img/ingestion%20pipeline.png)
+
+This pipeline is commonly used in **microservices architectures**, **event-driven systems**, and **data streaming applications**.
+
+- The **client** sends requests, which get processed by different API instances.
+- These APIs publish messages to **Kafka Brokers**, which act as the messaging backbone.
+- Kafka efficiently handles event-driven communication, making it scalable and reliable for real-time data processing.
+
 ### Multiple Processing as Consumers
+
+![multiple processing as consumers](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/4.%20Apache%20Kafka/img/multiple%20processing%20as%20consumers.png)
+
 Kafka allows multiple consumers to process messages independently, ensuring scalable and fault-tolerant data processing.
 
 ### Multistage Stream Processing
+
+![multistage stream processing](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/4.%20Apache%20Kafka/img/multistage%20stream%20processing.png)
+
 Messages pass through multiple processing stages before reaching their destination, ensuring efficient event-driven architectures.
