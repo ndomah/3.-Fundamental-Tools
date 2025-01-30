@@ -23,7 +23,7 @@ Spark leverages memory over disk storage, making it significantly faster than tr
 
 ### Spark Architecture
 
-![fig1 - architecture]()
+![fig1 - architecture](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/3.%20Apache%20Spark%20Fundamentals/img/fig1%20-%20spark%20architecture.png)
 
 - **Driver Program & Spark Context**: Main entry point, manages tasks
 - **Cluster Manager**: Manages resources (YARN, Kubernetes, Standalone, Mesos)
@@ -52,7 +52,7 @@ Spark leverages memory over disk storage, making it significantly faster than tr
 - **Jupyter Docker Container**: Local Spark environment with UI for interactive development.
 - Datasets Used:
 
-  ![fig2 - contents]()
+  ![fig2 - contents](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/3.%20Apache%20Spark%20Fundamentals/img/fig2%20-%20dataset.png)
 
   - `bookcontents.json`
   - `bookcontents.csv`
@@ -133,8 +133,8 @@ print(words.take(10))
 ```
 
 ### Notebooks for Reference
-- [`01_JSON_Transformations`]()
-- [`02_CSV_Schemas`]()
-- [`03_Working_with_DataFrames`]()
-- [`04_SparkSQL`]()
-- [`05_Working_With_RDDs`]()
+- [`01_JSON_Transformations`](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/3.%20Apache%20Spark%20Fundamentals/scripts/01_JSON_Transformations.ipynb)
+- [`02_CSV_Schemas`](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/3.%20Apache%20Spark%20Fundamentals/scripts/02_CSV_Schemas.ipynb)
+- [`03_Working_with_DataFrames`](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/3.%20Apache%20Spark%20Fundamentals/scripts/03_Working_with_DataFrames.ipynb)
+- [`04_SparkSQL`](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/3.%20Apache%20Spark%20Fundamentals/scripts/04_SparkSQL.ipynb)
+- [`05_Working_With_RDDs`](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/3.%20Apache%20Spark%20Fundamentals/scripts/05_Working_With_RDDs.ipynb)
