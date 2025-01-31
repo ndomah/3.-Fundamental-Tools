@@ -2,7 +2,7 @@
 ## MongoDB Basics
 ### Relational Schemas
 
-![fig1 - relational schemas]()
+![fig1 - relational schemas](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/5.%20MongoDB%20Fundamentals/img/fig1%20-%20relational%20schemas.png)
 
 A **relational schema** is a blueprint that defines how data is structured in a relational database. It specifies the tables, their columns, and relationships between them using **primary keys (PK)** and **foreign keys (FK)**.
 
@@ -13,7 +13,7 @@ A **relational schema** is a blueprint that defines how data is structured in a 
 
 ### MongoDB Documents Explained
 
-![fig2 - mongodb doc]()
+![fig2 - mongodb doc](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/5.%20MongoDB%20Fundamentals/img/fig2%20-%20mongodb%20doc.png)
 
 In MongoDB, data is stored in **documents**, which are JSON-like structures called **BSON (Binary JSON)**. Unlike relational databases that use tables, MongoDB documents are schema-flexible, allowing nested structures and arrays within a single record.
 
@@ -42,7 +42,7 @@ In MongoDB, data is stored in **documents**, which are JSON-like structures call
 
 ## Development Environment & Dataset
 ### Setup the Development Environment
-- Use [`docker-compose.yml`]() to spin up both a MongoDB and Mongo-Express container:
+- Use [`docker-compose.yml`](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/5.%20MongoDB%20Fundamentals/docker-compose.yml) to spin up both a MongoDB and Mongo-Express container:
 ```yml
 version: '3.8'
 
@@ -88,11 +88,11 @@ networks:
 ### The Dataset
 We will use the [Online Retail dataset from Kaggle](https://www.kaggle.com/datasets/tunguz/online-retail).
 
-![fig3 - dataset]()
+![fig3 - dataset](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/5.%20MongoDB%20Fundamentals/img/fig3%20-%20dataset.png)
 
 ### Schema Design
 
-![fig4 - schema design]()
+![fig4 - schema design](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/5.%20MongoDB%20Fundamentals/img/fig4%20-%20schema%20design.png)
 
 - Goals for querying the data:
   - Access data by `Customer_id`
@@ -103,7 +103,7 @@ We will use the [Online Retail dataset from Kaggle](https://www.kaggle.com/datas
 
 ## Working with MongoDB
 ### Write Documents
-- Refer to [`01_write_mongodb.py`]():
+- Refer to [`01_write_mongodb.py`](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/5.%20MongoDB%20Fundamentals/scripts/01_write_mongodb.py):
 ```python
 import pymongo
 
@@ -148,10 +148,10 @@ insert_multiple()
 - Then insert multiple documents: `insert_multiple()`
 - The id's will be updated in `testcol` in Mongo-Express:
 
-![fig5 - 3 id's]()
+![fig5 - 3 id's](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/5.%20MongoDB%20Fundamentals/img/fig5%20-%203%20ids.png)
 
 ### Read Documents
-- Refer to [`02_read_mongodb.py`]():
+- Refer to [`02_read_mongodb.py`](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/5.%20MongoDB%20Fundamentals/img/fig2%20-%20mongodb%20doc.png):
 ```python
 import pymongo
 
@@ -177,10 +177,10 @@ for x in mydoc:
 ```
 - The script will print out all documents for `Customer_id`: A85123
 
-![fig6 - mongo read]()
+![fig6 - mongo read](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/5.%20MongoDB%20Fundamentals/img/fig6%20-%20mongo%20read.png)
 
 ### Update Documents
-- Refer to [`03_update_mongodb.py`]():
+- Refer to [`03_update_mongodb.py`](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/5.%20MongoDB%20Fundamentals/scripts/03_update_mongodb.py):
 ```python
 import pymongo
 
@@ -216,14 +216,14 @@ update_document()
 ```
 - The `add_more_to_document()` function adds more information to `Customer_id`: A85123
 
-![fig7 - add attributes]()
+![fig7 - add attributes](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/5.%20MongoDB%20Fundamentals/img/fig7%20-%20add%20attributes.png)
 
 - The `update_document()` function updates the contents
 
-![fig8 - update document]()
+![fig8 - update document](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/5.%20MongoDB%20Fundamentals/img/fig8%20-%20update%20document.png)
 
 ### Delete Documents
-- Refer to [`04_delete_mongodb.py`]():
+- Refer to [`04_delete_mongodb.py`](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/5.%20MongoDB%20Fundamentals/scripts/04_delete_mongodb.py):
 ```python
 import pymongo
 
@@ -248,10 +248,10 @@ def delete_single():
 delete_single()
 ```
 
-![fig9 - delete]()
+![fig9 - delete](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/5.%20MongoDB%20Fundamentals/img/fig9%20-%20delete.png)
 
 ### Working with Sub-Documents
-- Refer to [`05_sub_documents_mongodb.py`]():
+- Refer to [`05_sub_documents_mongodb.py`](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/5.%20MongoDB%20Fundamentals/scripts/05_sub_documents_mongodb.py):
 ```python
 import pymongo
 
@@ -311,18 +311,18 @@ def update_sub_document():
 ```
 - `insert_multiple()`:
 
-![fig10 - insert multiple]()
+![fig10 - insert multiple](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/5.%20MongoDB%20Fundamentals/img/fig10%20-%20insert%20multiple.png)
 
 - `query_sub_document()`:
 
-![fig11 - query sub document]()
+![fig11 - query sub document](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/5.%20MongoDB%20Fundamentals/img/fig11%20-%20query%20sub%20document.png)
 
 - `update_sub_document()`:
 
-![fig12 - update sub document]()
+![fig12 - update sub document](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/5.%20MongoDB%20Fundamentals/img/fig12%20-%20update%20sub%20document.png)
 
 ### Working with Arrays of Sub-Documents
-- Refer to [`06_arrays_mongodb.py`]():
+- Refer to [`06_arrays_mongodb.py`](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/5.%20MongoDB%20Fundamentals/scripts/06_arrays_mongodb.py):
 ```python
 import pymongo
 
@@ -377,12 +377,12 @@ def add_subdocument_to_array():
 
 - `insert_array()`:
 
-![fig13 - insert array]()
+![fig13 - insert array](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/5.%20MongoDB%20Fundamentals/img/fig13%20-%20insert%20array.png)
 
 - `query_by_subdocument()`:
 
-![fig14 - query by subdocument]()
+![fig14 - query by subdocument](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/5.%20MongoDB%20Fundamentals/img/fig14%20-%20query%20by%20subdocument.png)
 
 - `add_subdocument_to_array()`:
 
-![fig15 - add subdocument]()
+![fig15 - add subdocument](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/5.%20MongoDB%20Fundamentals/img/fig15%20-%20add%20subdocument.png)
