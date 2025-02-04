@@ -2,7 +2,7 @@
 ## Choosing Data Stores
 ### Snowflake Basics
 
-![fig1 - snowflake basics]()
+![fig1 - snowflake basics](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/7.%20Snowflake%20for%20Data%20Engineers/img/fig1%20-%20snowflake%20basics.png)
 
 **ETL Workflow**:
 - **Extract**: Data is sourced from files/cloud storage
@@ -25,7 +25,7 @@
 
 ### Data Warehousing Basics
 
-![fig2 - b,s,g tables]()
+![fig2 - b,s,g tables](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/7.%20Snowflake%20for%20Data%20Engineers/img/fig2%20-%20bsg%20table.png)
 
 
 | **Layer**       | **Purpose**                                      | **Characteristics**                                         | **Example Data**                        |
@@ -39,22 +39,22 @@
 
 ### How Snowflake fits into Data Platforms
 
-![fig3 - oltp, olap]()
+![fig3 - oltp, olap](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/7.%20Snowflake%20for%20Data%20Engineers/img/fig3%20-%20oltp%2C%20olap.png)
 
 ## Loading CSVs from your PC
 ### Our Dataset & Goals
 - We are using [Online Retail](https://archive.ics.uci.edu/dataset/352/online+retail) data:
 
-![fig4 - dataset]()
+![fig4 - dataset](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/7.%20Snowflake%20for%20Data%20Engineers/img/fig4%20-%20dataset.png)
 
 **Staging data from local drive**
 
-![fig5 - stage data]()
+![fig5 - stage data](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/7.%20Snowflake%20for%20Data%20Engineers/img/fig5%20-%20stage%20data.png)
 
 *NOTE*: We are skipping silver tables for this tutorial... DON'T DO IN PROD
 
 ### Setup Snowflake Database
-- Run [`1_0_before_loading_csv.sql`]() in Snowflake Worksheet:
+- Run [`1_0_before_loading_csv.sql`](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/7.%20Snowflake%20for%20Data%20Engineers/worksheets/1_0_before_loading_csv.sql) in Snowflake Worksheet:
 ```sql
 CREATE OR REPLACE  WAREHOUSE SMALLWAREHOUSE
 WAREHOUSE_SIZE = 'XSMALL';
@@ -95,7 +95,7 @@ create or replace TABLE TESTDB.ECOMMERCE.DATA (
 );
 ```
 ### Preparing the Upload File
-- Run [`simplify.py`]():
+- Run [`simplify.py`](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/7.%20Snowflake%20for%20Data%20Engineers/simplify.py):
 ```python
 """
 Remove lines that give problems to snowflake.
@@ -142,11 +142,11 @@ if __name__ == "__main__":
     df.to_csv(out_fp, index=False)
     print(f'File to upload available at {out_fp}')
 ```
-- This will create the [`upload.csv`]() file
+- This will create the `upload.csv` file
 
 ### Using Internal Stages with SnowSQL
 - Start [SnowSQL](https://www.snowflake.com/en/developers/downloads/snowsql/) in PowerShell: `snowsql -a bl46735.us-east-2.aws -u NILESHD -w SMALLWAREHOUSE -d TESTDB`
-- Run commands from [`1_1 Load with snowsql.sql`]():
+- Run commands from [`1_1 Load with snowsql.sql`](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/7.%20Snowflake%20for%20Data%20Engineers/worksheets/1_1%20Load%20with%20snowsql.sql):
 ```sql
 -- set the warehouse manually
 USE WAREHOUSE SMALLWAREHOUSE;
@@ -190,11 +190,11 @@ alter session set timestamp_input_format='MM/DD/YYYY HH24:MI';
 ```
 - The data will now be uploaded in the table
 
-![fig6 - data preview]()
+![fig6 - data preview](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/7.%20Snowflake%20for%20Data%20Engineers/img/fig6%20-%20data%20preview.png)
 
 ### Splitting a Data Table into 2 Tables
 
-- Run [`2_split_table.sql`]() in Snowflake Worksheet:
+- Run [`2_split_table.sql`](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/7.%20Snowflake%20for%20Data%20Engineers/worksheets/2_split_table.sql) in Snowflake Worksheet:
 ```sql
 CREATE OR REPLACE TABLE TESTDB.ECOMMERCE.INVOICES AS( SELECT DISTINCT CUSTOMERID, COUNTRY, INVOICEDATE, INVOICENO
                FROM TESTDB.ECOMMERCE.DATA
@@ -212,12 +212,12 @@ SELECT COUNT(*) FROM TESTDB.ECOMMERCE.ITEMS;
 ```
 ## Visualizing Data
 ### Creating a Visualization Worksheet
-- From [`3_visualize.sql`]():
+- From [`3_visualize.sql`](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/7.%20Snowflake%20for%20Data%20Engineers/worksheets/3_visualize.sql):
 ```sql
 -- INVOICES TABLE
 SELECT COUNT(DISTINCT COUNTRY) AS NUMBER_COUNTRIES FROM INVOICES;
 ```
-![fig7]()
+![fig7](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/7.%20Snowflake%20for%20Data%20Engineers/img/fig7.png)
 ```sql
 -- TOP 2-10 countries with most clients
 SELECT COUNTRY, 
@@ -229,7 +229,7 @@ GROUP BY COUNTRY
 ORDER BY N_CLIENTS DESC
 LIMIT 10;
 ```
-![fig8]()
+![fig8](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/7.%20Snowflake%20for%20Data%20Engineers/img/fig8.png)
 ```sql
 -- TOP clinets with most invoices
 SELECT CUSTOMERID, COUNT(DISTINCT INVOICENO) AS N_ORDERS
@@ -238,7 +238,7 @@ GROUP BY COUNTRY, CUSTOMERID
 ORDER BY N_ORDERS DESC
 LIMIT 10;
 ```
-![fig9]()
+![fig9](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/7.%20Snowflake%20for%20Data%20Engineers/img/fig9.png)
 ```sql
 -- most ordered items
 SELECT STOCKCODE,DESCRIPTION,SUM(QUANTITY) AS TOTAL_QUANTITY
@@ -247,7 +247,7 @@ GROUP BY STOCKCODE, DESCRIPTION
 ORDER BY TOTAL_QUANTITY DESC
 LIMIT 10;
 ```
-![fig10]()
+![fig10](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/7.%20Snowflake%20for%20Data%20Engineers/img/fig10.png)
 ```sql
 -- overview of unit prices
 WITH TEMP AS (
@@ -261,7 +261,7 @@ SELECT COUNT(*),
        MAX(UNITPRICE)
 FROM TEMP;
 ```
-![fig11]()
+![fig11](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/7.%20Snowflake%20for%20Data%20Engineers/img/fig11.png)
 ```sql
 --  Which customers bought a WHILE METAL LANTERN?
 SELECT DISTINCT INVOICES.CUSTOMERID
@@ -270,7 +270,7 @@ JOIN INVOICES ON ITEMS.INVOICENO=INVOICES.INVOICENO
 WHERE ITEMS.DESCRIPTION = 'WHITE METAL LANTERN' 
 AND INVOICES.CUSTOMERID IS NOT NULL;
 ```
-![fig12]()
+![fig12](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/7.%20Snowflake%20for%20Data%20Engineers/img/fig12.png)
 ```sql
 -- Which ITEMS are the most revenue generating per country outside of UK?
 SELECT ITEMS.DESCRIPTION, AVG(ITEMS.UNITPRICE) * SUM(ITEMS.QUANTITY) AS TOTAL_REVENUE, INVOICES.COUNTRY
@@ -280,10 +280,10 @@ WHERE UPPER(INVOICES.COUNTRY) NOT LIKE 'UNITED%'
 GROUP BY ITEMS.DESCRIPTION, INVOICES.COUNTRY
 ORDER BY TOTAL_REVENUE DESC, INVOICES.COUNTRY, ITEMS.DESCRIPTION;
 ```
-![fig13]()
+![fig13](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/7.%20Snowflake%20for%20Data%20Engineers/img/fig13.png)
 
 ### Creating Dashboard
-- From [`5_dashboard.sql`]():
+- From [`5_dashboard.sql`](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/7.%20Snowflake%20for%20Data%20Engineers/worksheets/5_dashboard.sql):
 ```sql
 SELECT STOCKCODE,DESCRIPTION,SUM(QUANTITY) AS TOTAL_QUANTITY
 FROM ITEMS
@@ -292,16 +292,16 @@ ORDER BY TOTAL_QUANTITY DESC
 LIMIT 10;
 ```
 
-![fig14 - dashboard]
+![fig14 - dashboard](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/7.%20Snowflake%20for%20Data%20Engineers/img/fig14%20-%20dashboard.png)
 
 
 ### Connect PowerBI to Snowflake
 - In PowerBI connect to Snowflake warehouse using DirectQuery
 
-![fig15]()
+![fig15](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/7.%20Snowflake%20for%20Data%20Engineers/img/fig15%20-%20powerbi.png)
 
 ### Query Data with Python
-- Run [`connect.py`]():
+- Run [`connect.py`](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/7.%20Snowflake%20for%20Data%20Engineers/connect.py):
 ```python
 """
 With this snippet you can connect to snowflake with python
@@ -348,11 +348,11 @@ df = res.fetch_pandas_all()
 print(df)
 ```
 
-![fig16]()
+![fig16](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/7.%20Snowflake%20for%20Data%20Engineers/img/fig16.png)
 
 ## Automation
 ### Create Import Task
-- From [`4_1_task_import.sql`]():
+- From [`4_1_task_import.sql`](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/7.%20Snowflake%20for%20Data%20Engineers/worksheets/4_1_task_import.sql):
 ```sql
 -- Clean our stage
 list @my_upload;
@@ -392,7 +392,7 @@ ALTER TASK TESTDB.ECOMMERCE.MY_import_from_stage RESUME;
 
 
 ### Create Table Refresh Task
-- From[`4_2_task_runner.sql`]():
+- From[`4_2_task_runner.sql`](https://github.com/ndomah/3.-Fundamental-Tools/blob/main/7.%20Snowflake%20for%20Data%20Engineers/worksheets/4_2_task_runner.sql):
 ```sql
 create or replace task TESTDB.ECOMMERCE.SPLIT_TABLE_AUTOMATIC
 	warehouse=SMALLWAREHOUSE
@@ -413,9 +413,3 @@ create or replace task TESTDB.ECOMMERCE.SPLIT_TABLE_AUTOMATIC_SECOND
 ALTER TASK TESTDB.ECOMMERCE.SPLIT_TABLE_AUTOMATIC SUSPEND;
 ALTER TASK TESTDB.ECOMMERCE.SPLIT_TABLE_AUTOMATIC_SECOND SUSPEND;
 ```
-
-
-
-
-
-
