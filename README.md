@@ -9,4 +9,3 @@ This repo contains my materials from Module 3 - Fundamental Tools from The Data 
 5. [MongoDB Fundamentals](https://github.com/ndomah/3.-Fundamental-Tools/tree/main/6.%20MongoDB%20Fundamentals)
 6. [Log analysis with Elasticsearch](https://github.com/ndomah/3.-Fundamental-Tools/tree/main/7.%20Log%20analysis%20with%20Elasticsearch)
 7. [Snowflake for Data Engineers](https://github.com/ndomah/3.-Fundamental-Tools/tree/main/8.%20Snowflake%20for%20Data%20Engineers)
-8. [dbt for Data Engineers](https://github.com/ndomah/3.-Fundamental-Tools/tree/main/9.%20dbt%20for%20Data%20Engineers)
